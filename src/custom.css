@@ -1,0 +1,131 @@
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+  min-height: 100vh;
+}
+
+.form-container, .table-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(80, 112, 255, 0.10), 0 1.5px 6px rgba(0,0,0,0.04);
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+  margin-top: 2.5rem;
+  transition: box-shadow 0.2s;
+}
+
+.form-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(80, 112, 255, 0.10), 0 1.5px 6px rgba(0,0,0,0.04);
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+  margin-top: 2.5rem;
+  transition: box-shadow 0.2s;
+}
+
+.form-container:hover, .table-container:hover {
+  box-shadow: 0 8px 40px rgba(80, 112, 255, 0.18), 0 2px 8px rgba(0,0,0,0.06);
+}
+
+h2 {
+  font-weight: 700;
+  color: #3b3b5c;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #4f8cff 0%, #38e8fc 100%);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  min-width: 110px;
+  box-shadow: 0 2px 8px rgba(80, 112, 255, 0.10);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  background: linear-gradient(90deg, #38e8fc 0%, #4f8cff 100%);
+  box-shadow: 0 4px 16px rgba(80, 112, 255, 0.18);
+}
+
+.btn-info, .btn-danger, .btn-secondary {
+  min-width: 90px;
+  font-weight: 500;
+  transition: box-shadow 0.2s;
+}
+.btn-info {
+  background: #38e8fc;
+  border: none;
+  color: #fff;
+}
+.btn-info:hover {
+  background: #4f8cff;
+}
+.btn-danger {
+  background: #ff4f70;
+  border: none;
+}
+.btn-danger:hover {
+  background: #ff7f9c;
+}
+.btn-secondary {
+  background: #e0e7ff;
+  color: #3b3b5c;
+  border: none;
+}
+.btn-secondary:hover {
+  background: #c7d2fe;
+}
+
+.table {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.table th {
+  background: #e0e7ff;
+  color: #3b3b5c;
+  font-weight: 700;
+  border-bottom: 2px solid #c7d2fe;
+}
+
+.table td {
+  color: #4b5563;
+  font-size: 1.05rem;
+}
+
+.alert-danger {
+  font-size: 1.05rem;
+  text-align: center;
+  background: #ffe4e6;
+  color: #b91c1c;
+  border: none;
+}
+
+.form-label {
+  color: #3b3b5c;
+  font-weight: 600;
+}
+
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 1px solid #c7d2fe;
+  background: #f8fafc;
+  color: #3b3b5c;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+.form-control:focus, .form-select:focus {
+  border-color: #4f8cff;
+  box-shadow: 0 0 0 2px #e0e7ff;
+}
+
+@media (max-width: 768px) {
+  .form-container, .table-container {
+    padding: 1rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+} 

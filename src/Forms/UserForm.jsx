@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import { withRouter } from '../withRouter';
 
 class UserForm extends Component {
   constructor(props) {
@@ -9,107 +10,115 @@ class UserForm extends Component {
       lastName: '',
       qualification: '',
       gender: '',
-      submitted: false
+      showError: false
     };
   }
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value, showError: false });
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  handleSubmit = (e) => {
+    e.preventDefault();
     const { firstName, lastName, qualification, gender } = this.state;
+    if (!firstName || !lastName || !qualification || !gender) {
+      this.setState({ showError: true });
+      return;
+    }
     const data = { firstName, lastName, qualification, gender };
-    localStorage.setItem('userFormData', JSON.stringify(data));
-    this.setState({ submitted: true });
+    if (this.props.setUsers) {
+      this.props.setUsers(prevUsers => [...prevUsers, data]);
+    }
+    this.props.navigate('/formdetails');
   };
 
   render() {
-    if (this.state.submitted) {
-      return <Navigate to="/formdetails" />;
-    }
-
+    const { firstName, lastName, qualification, gender, showError } = this.state;
     return (
-      <div className="form-container">
-        <h1>Student Registration Form</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-field">
-            <label htmlFor="firstName"><strong>First Name: </strong></label>
-            <input
-              id="firstName"
-              name="firstName"
-              placeholder="Enter your first name"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          <br/>
-          <div className="form-field">
-            <label htmlFor="lastName"><strong>Last Name: </strong></label>
-            <input
-              id="lastName"
-              name="lastName"
-              placeholder="Enter your last name"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          <br/>
-
-          <div className="form-field">
-            <label htmlFor="qualification"><strong>Qualification: </strong></label>
-            <select
-              id="qualification"
-              name="qualification"
-              value={this.state.qualification}
-              onChange={this.handleChange}
-              required
-            >
-              <option value="">-- Select Qualification --</option>
-              <option value="Bachelor">Bachelor's</option>
-              <option value="Master">Master's</option>
-              <option value="PhD">PhD</option>
-              <option value="Secondary">Secondary Education</option>
-            </select>
-          </div>
-          <br/>
-          <div className="form-field">
-            <label><strong>Gender: </strong></label>
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="Male"
-                checked={this.state.gender === 'Male'}
-                onChange={this.handleChange}
-                required
-              />
-              Male
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="Female"
-                checked={this.state.gender === 'Female'}
-                onChange={this.handleChange}
-                required
-              />
-              Female
-            </label>
-          </div>
-          <br/>
-          <div className="form-field">
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-      </div>
+      <Container className="mt-5 form-container">
+        <Row className="justify-content-md-center">
+          <Col md={6}>
+            <h2>Student Registration Form</h2>
+            {showError && (
+              <Alert variant="danger" className="mt-2 mb-2">
+                The form has to be filled
+              </Alert>
+            )}
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Group className="mb-3" controlId="formFirstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="firstName"
+                  value={firstName}
+                  onChange={this.handleChange}
+                  placeholder="Enter first name"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formLastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="lastName"
+                  value={lastName}
+                  onChange={this.handleChange}
+                  placeholder="Enter last name"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formQualification">
+                <Form.Label>Qualification</Form.Label>
+                <Form.Select
+                  name="qualification"
+                  value={qualification}
+                  onChange={this.handleChange}
+                >
+                  <option value="">Select qualification</option>
+                  <option value="High School">High School</option>
+                  <option value="Diploma">Diploma</option>
+                  <option value="Associate Degree">Associate Degree</option>
+                  <option value="Bachelor's">Bachelor's</option>
+                  <option value="Postgraduate Diploma">Postgraduate Diploma</option>
+                  <option value="Master's">Master's</option>
+                  <option value="PhD">PhD</option>
+                  <option value="Certificate">Certificate</option>
+                  <option value="Other">Other</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Gender</Form.Label>
+                <div>
+                  <Form.Check
+                    inline
+                    label="Male"
+                    name="gender"
+                    type="radio"
+                    id="gender-male"
+                    value="Male"
+                    checked={gender === 'Male'}
+                    onChange={this.handleChange}
+                  />
+                  <Form.Check
+                    inline
+                    label="Female"
+                    name="gender"
+                    type="radio"
+                    id="gender-female"
+                    value="Female"
+                    checked={gender === 'Female'}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
 
-export default UserForm;
+export default withRouter(UserForm);
